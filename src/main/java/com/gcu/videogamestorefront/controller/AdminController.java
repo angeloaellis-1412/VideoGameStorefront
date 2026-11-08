@@ -31,6 +31,15 @@ public class AdminController {
 
         model.addAttribute("game", new Game());
 
+        model.addAttribute(
+                "platforms",
+                gameService.getAllGames().stream()
+                        .map(Game::getPlatform)
+                        .filter(platform -> platform != null && !platform.isBlank())
+                        .distinct()
+                        .sorted()
+                        .toList());
+
         return "admin/game-form";
     }
 
@@ -42,6 +51,15 @@ public class AdminController {
         model.addAttribute(
                 "game",
                 gameService.getGameById(id));
+
+        model.addAttribute(
+                "platforms",
+                gameService.getAllGames().stream()
+                        .map(Game::getPlatform)
+                        .filter(platform -> platform != null && !platform.isBlank())
+                        .distinct()
+                        .sorted()
+                        .toList());
 
         return "admin/game-form";
     }
