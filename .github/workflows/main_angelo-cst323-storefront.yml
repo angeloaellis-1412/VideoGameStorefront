@@ -13,9 +13,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
-       steps:
+    steps:
       - uses: actions/checkout@v4
 
       - name: Set up Java version
