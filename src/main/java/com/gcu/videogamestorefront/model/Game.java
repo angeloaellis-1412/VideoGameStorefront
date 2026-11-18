@@ -10,6 +10,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 
 @Entity
 @Table(name = "games")
@@ -40,6 +42,22 @@ public class Game {
     private String description;
 
     private boolean active = true;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String mainImageUrl;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String imageUrl1;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String imageUrl2;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String imageUrl3;
 
     public Game() {
     }
@@ -126,5 +144,37 @@ public class Game {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
+    }
+
+    public String getImageUrl1() {
+        return imageUrl1;
+    }
+
+    public void setImageUrl1(String imageUrl1) {
+        this.imageUrl1 = imageUrl1;
+    }
+
+    public String getImageUrl2() {
+        return imageUrl2;
+    }
+
+    public void setImageUrl2(String imageUrl2) {
+        this.imageUrl2 = imageUrl2;
+    }
+
+    public String getImageUrl3() {
+        return imageUrl3;
+    }
+
+    public void setImageUrl3(String imageUrl3) {
+        this.imageUrl3 = imageUrl3;
     }
 }
