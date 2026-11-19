@@ -10,9 +10,23 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Security configuration for the Video Game Storefront.
+ * Defines public and protected routes, form-based login,
+ * logout behavior, password encoding, and the administrator account.
+ */
 @Configuration
 public class SecurityConfig {
 
+    /**
+     * Configures HTTP security for the application.
+     * Customer storefront routes are publicly accessible,
+     * while administrator routes require the ADMIN role.
+     *
+     * @param http Spring Security HTTP configuration object
+     * @return configured security filter chain
+     * @throws Exception if the security configuration cannot be created
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -42,11 +56,24 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Creates the password encoder used to securely encode
+     * administrator passwords.
+     *
+     * @return BCrypt password encoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Creates the in-memory administrator user account
+     * used to access protected administrator pages.
+     *
+     * @param passwordEncoder password encoder used to secure the password
+     * @return in-memory user details manager containing the administrator account
+     */
     @Bean
     public InMemoryUserDetailsManager userDetailsService(
             PasswordEncoder passwordEncoder) {

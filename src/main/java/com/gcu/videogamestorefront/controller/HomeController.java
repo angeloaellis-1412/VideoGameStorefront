@@ -9,15 +9,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gcu.videogamestorefront.service.GameService;
 
+/**
+ * Controller for the public game storefront.
+ * Handles browsing, searching, filtering, and viewing game details.
+ */
 @Controller
 public class HomeController {
 
     private final GameService gameService;
 
+    /**
+     * Creates the home controller with the required game service.
+     *
+     * @param gameService service used to retrieve and filter game data
+     */
     public HomeController(GameService gameService) {
         this.gameService = gameService;
     }
 
+    /**
+     * Displays the game storefront and applies optional search,
+     * platform, genre, and price filters.
+     *
+     * @param search optional search text used to match game titles
+     * @param platform selected platform filter
+     * @param genres optional list of selected genres
+     * @param priceRanges optional list of selected price ranges
+     * @param model model used to pass game and filter data to the view
+     * @return the game storefront view
+     */
     @GetMapping({"/", "/games"})
     public String showGames(
             @RequestParam(required = false) String search,
@@ -42,6 +62,13 @@ public class HomeController {
         return "games";
     }
 
+    /**
+     * Displays the details page for a selected game.
+     *
+     * @param id ID of the game to display
+     * @param model model used to provide the selected game to the view
+     * @return the game details view
+     */
     @GetMapping("/games/details")
     public String showGameDetails(
             @RequestParam Long id,

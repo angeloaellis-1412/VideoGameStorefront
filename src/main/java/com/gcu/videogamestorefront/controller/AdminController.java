@@ -13,15 +13,31 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gcu.videogamestorefront.model.Game;
 import com.gcu.videogamestorefront.service.GameService;
 
+/**
+ * Controller for administrator inventory management.
+ * Handles the admin dashboard, game creation and editing,
+ * image uploads, and game deletion.
+ */
 @Controller
 public class AdminController {
 
     private final GameService gameService;
 
+    /**
+     * Creates the admin controller with the required game service.
+     *
+     * @param gameService service used to manage game inventory
+     */
     public AdminController(GameService gameService) {
         this.gameService = gameService;
     }
 
+    /**
+     * Displays the administrator dashboard and current game inventory.
+     *
+     * @param model model used to pass game data to the view
+     * @return the administrator dashboard view
+     */
     @GetMapping("/admin")
     public String showDashboard(Model model) {
 
@@ -30,6 +46,12 @@ public class AdminController {
         return "admin/dashboard";
     }
 
+    /**
+     * Displays the form used to add a new game.
+     *
+     * @param model model used to provide the new game and available platforms
+     * @return the game form view
+     */
     @GetMapping("/admin/add")
     public String showAddGameForm(Model model) {
 
@@ -47,6 +69,13 @@ public class AdminController {
         return "admin/game-form";
     }
 
+    /**
+     * Displays the form used to edit an existing game.
+     *
+     * @param id ID of the game being edited
+     * @param model model used to provide the game and available platforms
+     * @return the game form view
+     */
     @GetMapping("/admin/edit")
     public String showEditGameForm(
             @RequestParam Long id,
@@ -68,6 +97,19 @@ public class AdminController {
         return "admin/game-form";
     }
 
+    /**
+     * Saves a new or edited game and processes optional uploaded images.
+     * Existing images are preserved during editing unless replacement
+     * image files are selected.
+     *
+     * @param game game information submitted from the administrator form
+     * @param mainImageFile optional main game image
+     * @param imageFile1 optional additional game image
+     * @param imageFile2 optional additional game image
+     * @param imageFile3 optional additional game image
+     * @return redirect to the administrator dashboard
+     * @throws IOException if an uploaded image cannot be read or converted
+     */
     @PostMapping("/admin/save")
     public String saveGame(
             Game game,
@@ -118,6 +160,12 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    /**
+     * Deletes a game from the inventory.
+     *
+     * @param id ID of the game to delete
+     * @return redirect to the administrator dashboard
+     */
     @PostMapping("/admin/delete")
     public String deleteGame(@RequestParam Long id) {
 
@@ -126,9 +174,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    /*
+    /**
      * Converts an uploaded image into a Base64 data URL so the image
      * can be stored with the game and displayed directly in the browser.
+     *
+     * @param file uploaded image file
+     * @return Base64 data URL representing the uploaded image
+     * @throws IOException if the uploaded file cannot be read
      */
     private String convertImage(MultipartFile file) throws IOException {
 

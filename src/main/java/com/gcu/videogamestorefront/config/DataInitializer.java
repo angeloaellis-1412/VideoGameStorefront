@@ -9,9 +9,20 @@ import org.springframework.context.annotation.Configuration;
 import com.gcu.videogamestorefront.model.Game;
 import com.gcu.videogamestorefront.repository.GameRepository;
 
+/**
+ * Configuration class responsible for loading initial game data
+ * into the database when the application starts.
+ */
 @Configuration
 public class DataInitializer {
 
+    /**
+     * Creates a CommandLineRunner that loads sample games into the database
+     * when no game records are currently stored.
+     *
+     * @param gameRepository repository used to save and count game records
+     * @return command-line runner that initializes sample game data
+     */
     @Bean
     CommandLineRunner loadGames(GameRepository gameRepository) {
         return args -> {

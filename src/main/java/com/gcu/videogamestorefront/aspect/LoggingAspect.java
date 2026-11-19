@@ -7,10 +7,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * Aspect responsible for centralized application logging.
+ * Logs method entry, successful completion, and exceptions
+ * for controller, service, and repository methods.
+ */
 @Aspect
 @Component
 public class LoggingAspect {
 
+    /**
+     * Logs execution details for controller, service, and repository methods.
+     * Records when a method starts, when it completes successfully,
+     * and when an exception occurs.
+     *
+     * @param joinPoint method execution being intercepted
+     * @return result returned by the intercepted method
+     * @throws Throwable if the intercepted method throws an exception
+     */
     @Around(
         "execution(* com.gcu.videogamestorefront.controller..*(..)) || " +
         "execution(* com.gcu.videogamestorefront.service..*(..)) || " +
@@ -19,9 +33,11 @@ public class LoggingAspect {
     public Object logMethodExecution(ProceedingJoinPoint joinPoint) throws Throwable {
 
         Class<?> targetClass = joinPoint.getTarget().getClass();
+
         Logger logger = LoggerFactory.getLogger(targetClass);
 
         String className = targetClass.getSimpleName();
+
         String methodName = joinPoint.getSignature().getName();
 
         logger.info(
